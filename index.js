@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// signup
 const signupForm = document.querySelector('#signup-form');
-const modal = document.querySelector('#modal-signup');
 
 signupForm.addEventListener('submit', (e)=> {
   e.preventDefault();
@@ -23,9 +23,47 @@ signupForm.addEventListener('submit', (e)=> {
   // inscrire l'utilisateur
   auth.createUserWithEmailAndPassword(email, password).then( cred => {
     console.log(cred);
-
+    const modal = document.querySelector('#modal-signup');
     // fermer le formulaire d'inscription et réinitialiser le formulaire
     M.Modal.getInstance(modal).close();
     signupForm.reset();
   })
 })
+
+
+// logout
+const logout = document.querySelector('#logout');
+
+logout.addEventListener('click', (e)=> {
+  e.preventDefault();
+
+  auth.signOut().then(() => {
+    console.log('user déco');
+  })
+})
+
+
+
+// login
+
+const loginForm = document.querySelector('#login-form');
+
+loginForm.addEventListener('submit', (e)=> {
+  e.preventDefault();
+
+  // obtenir des informations sur l'utilisateur
+  const email = loginForm['login-email'].value;
+  const password = loginForm['login-password'].value;
+
+  auth.signInWithEmailAndPassword(email,password) .then( cred => {
+    console.log(cred.user);
+
+    const modal = document.querySelector('#modal-login');
+
+
+    // fermer le formulaire de connexion et réinitialiser le formulaire
+    M.Modal.getInstance(modal).close();
+    loginForm.reset();
+  })
+
+});
