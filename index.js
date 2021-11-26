@@ -1,3 +1,9 @@
+// écouter les changements de statut d'authentification
+auth.onAuthStateChanged( user => {
+  
+  user ? console.log('co', user) : console.log('deco');
+})
+
 // configuration materialize les composants
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -22,11 +28,12 @@ signupForm.addEventListener('submit', (e)=> {
 
   // inscrire l'utilisateur
   auth.createUserWithEmailAndPassword(email, password).then( cred => {
-    console.log(cred);
+
     const modal = document.querySelector('#modal-signup');
     // fermer le formulaire d'inscription et réinitialiser le formulaire
     M.Modal.getInstance(modal).close();
     signupForm.reset();
+
   })
 })
 
@@ -37,9 +44,7 @@ const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e)=> {
   e.preventDefault();
 
-  auth.signOut().then(() => {
-    console.log('user déco');
-  })
+  auth.signOut()
 })
 
 
@@ -55,11 +60,9 @@ loginForm.addEventListener('submit', (e)=> {
   const email = loginForm['login-email'].value;
   const password = loginForm['login-password'].value;
 
-  auth.signInWithEmailAndPassword(email,password) .then( cred => {
-    console.log(cred.user);
+  auth.signInWithEmailAndPassword(email,password).then( cred => {
 
     const modal = document.querySelector('#modal-login');
-
 
     // fermer le formulaire de connexion et réinitialiser le formulaire
     M.Modal.getInstance(modal).close();
